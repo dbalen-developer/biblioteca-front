@@ -1,0 +1,237 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4">Edição de Livros</h2>
+
+  <form [formGroup]="livroForm" (submit)="salvarLivro()">
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="titulo" class="form-label">Título</label>
+        <input type="text" id="titulo" formControlName="titulo" class="form-control" required>
+
+        <div class="validation-container">
+          @if(livroForm.get('titulo')?.invalid && (livroForm.get('titulo')?.dirty || livroForm.get('titulo')?.touched))
+          {
+          <div class="text-danger">
+            @if(livroForm.get('titulo')?.errors?.['required'])
+            {
+            Campo obrigatório
+            }
+            @if(livroForm.get('titulo')?.errors?.['maxlength'])
+            {
+            Campo deve ter no máximo 40 caracteres.
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="editora" class="form-label">Editora</label>
+        <input type="text" id="editora" formControlName="editora" class="form-control" required>
+
+        <div class="validation-container">
+          @if(livroForm.get('editora')?.invalid && (livroForm.get('editora')?.dirty ||
+          livroForm.get('editora')?.touched))
+          {
+          <div class="text-danger">
+            @if(livroForm.get('editora')?.errors?.['required'])
+            {
+            Campo obrigatório
+            }
+            @if(livroForm.get('editora')?.errors?.['maxlength'])
+            {
+            Campo deve ter no máximo 40 caracteres.
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="edicao" class="form-label">Edição</label>
+        <input type="number" id="edicao" formControlName="edicao" class="form-control" required>
+
+        <div class="validation-container">
+          @if(livroForm.get('edicao')?.invalid && (livroForm.get('edicao')?.dirty || livroForm.get('edicao')?.touched))
+          {
+          <div class="text-danger">
+            @if(livroForm.get('edicao')?.errors?.['required'])
+            {
+            Campo obrigatório
+            }
+            @if(livroForm.get('edicao')?.errors?.['min'] || livroForm.get('edicao')?.errors?.['max'])
+            {
+            Campo deve ser entre 1 e 9999.
+            }
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="anoPublicacao" class="form-label">Ano Publicação</label>
+        <input type="text" id="anoPublicacao" formControlName="anoPublicacao" class="form-control" required>
+
+        <div class="validation-container">
+          @if(livroForm.get('anoPublicacao')?.invalid && (livroForm.get('anoPublicacao')?.dirty ||
+          livroForm.get('anoPublicacao')?.touched))
+          {
+          <div class="text-danger">
+            @if(livroForm.get('anoPublicacao')?.errors?.['required'])
+            {
+            Campo obrigatório
+            }
+            @if(livroForm.get('anoPublicacao')?.errors?.['pattern'])
+            {
+            Campo inválido.
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Autores -->
+
+    <div class="card mb-3">
+      <div class="card-body mb-0 pb-0">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="row">
+              <label for="selectAutor" class="form-label">Autores</label>
+            </div>
+            <div class="row">
+              <div class="col-9">
+                <select id="selectAutor" class="form-select small-text" #autorSelecionado>
+                  <option *ngFor="let autor of listaAutores" [value]="autor.codAu">{{ autor.nome }}</option>
+                </select>
+              </div>
+              <div class="col-3 text-center">
+                <button type="button" class="btn btn-primary small-text"
+                  (click)="adicionarAutor(autorSelecionado)">Inserir</button>
+              </div>
+            </div>
+          </div>
+
+          @if(listaAutoresAdicionados.length > 0)
+          {
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">Nome</th>
+                  <th scope="col" class="text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for(autor of listaAutoresAdicionados; track $index)
+                {
+                <tr>
+                  <td class="col-sm-6 col-md-9">{{autor.nome}}</td>
+                  <td class="col-sm-6 col-md-3 text-center">
+                    <a class="btn btn-danger btn-sm text-white" (click)="removerAutor(autor)">Deletar</a>
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Assuntos -->
+
+    <div class="card mb-3">
+      <div class="card-body mb-0 pb-0">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="row">
+              <label for="selectAssunto" class="form-label">Assuntos</label>
+            </div>
+            <div class="row">
+              <div class="col-9">
+                <select id="selectAssunto" class="form-select small-text" #assuntoSelecionado>
+                  <option *ngFor="let assunto of listaAssuntos" [value]="assunto.codAs">{{ assunto.descricao }}</option>
+                </select>
+              </div>
+              <div class="col-3 text-center">
+                <button type="button" class="btn btn-primary small-text"
+                  (click)="adicionarAssunto(assuntoSelecionado)">Inserir</button>
+              </div>
+            </div>
+          </div>
+
+          @if(listaAssuntosAdicionados.length > 0)
+          {
+          <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+              <thead class="table-dark">
+                <tr>
+                  <th scope="col">Descrição</th>
+                  <th scope="col" class="text-center">Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for(assunto of listaAssuntosAdicionados; track $index)
+                {
+                <tr>
+                  <td class="col-sm-6 col-md-9">{{assunto.descricao}}</td>
+                  <td class="col-sm-6 col-md-3 text-center">
+                    <a class="btn btn-danger btn-sm text-white" (click)="removerAssunto(assunto)">Deletar</a>
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- Formas de Compra -->
+
+    <div class="card">
+      <div class="card-body mb-0 pb-0">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="editora" class="form-label">Formas de Compra</label>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                  <tr>
+                    <th scope="col">Descricao</th>
+                    <th scope="col" class="text-center">Preço</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @for(forma of listaLivroFormasCompra; track $index)
+                  {
+                  <tr>
+                    <td class="col-sm-6 col-md-6">{{forma.descricao}}</td>
+                    <td class="col-sm-6 col-md-6">
+                      <input type="text" class="form-control preco-input small-text" [value]="formatPreco(forma.preco)"
+                        (blur)="onPrecoBlur(forma, $event)" />
+                    </td>
+                  </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+    <div class="row">
+      <div class="mb-3">
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </form>
+</div>

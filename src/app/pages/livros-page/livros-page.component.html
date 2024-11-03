@@ -1,0 +1,40 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Livros</h2>
+
+    <button type="button" class="btn btn-primary my-2" (click)="redirecionarParaTelaCadastroLivro()">
+        Adicionar
+    </button>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Titulo</th>
+                    <th scope="col">Editora</th>
+                    <th scope="col">Edição</th>
+                    <th scope="col">Ano Publicação</th>
+                    <th scope="col" class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(livro of listaLivros; track $index)
+                {
+                <tr>
+                    <td class="col-3 col-md-3">{{livro.titulo}}</td>
+                    <td class="col-3 col-md-3">{{livro.editora}}</td>
+                    <td class="col-1 col-md-1">{{livro.edicao}}</td>
+                    <td class="col-2 col-md-2">{{livro.anoPublicacao}}</td>
+                    <td class="col-3 col-md-3 text-center">
+
+                        <button class="btn btn-warning btn-sm my-xs-2 my-sm-2 my-md-0 me-2 text-white"
+                            (click)="editarLivro(livro)">Editar</button>
+
+                        <button class="btn btn-danger btn-sm text-white"
+                            (click)="deletarLivro(livro.codl)">Deletar</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

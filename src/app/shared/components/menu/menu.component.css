@@ -1,0 +1,22 @@
+.navbar {
+  transition: background-color 0.3s ease;
+}
+
+.navbar:hover {
+  background-color: #0056b3;
+  /* Tom mais escuro ao passar o mouse */
+}
+
+.nav-link {
+  color: white;
+  /* Cor padrão dos links */
+}
+
+.nav-link:hover {
+  color: #ffd700;
+  /* Cor dos links ao passar o mouse (exemplo: dourado) */
+}
+
+.bg-primary {
+  background-color: var(--primary-color) !important;
+}

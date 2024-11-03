@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-title">Cadastro de Assunto</h4>
+  </div>
+  <form [formGroup]="assuntoForm" (submit)="salvarAssunto()">
+    <div class="modal-body">
+      <div class="mb-3">
+        <label for="descricao" class="form-label">Descricao</label>
+        <input type="text" id="descricao" formControlName="descricao" class="form-control" required>
+        
+        <div class="validation-container">
+  
+          @if(assuntoForm.get('descricao')?.invalid && (assuntoForm.get('descricao')?.dirty || assuntoForm.get('descricao')?.touched))
+          {
+          <div class="text-danger">
+            @if(assuntoForm.get('descricao')?.errors?.['required'])
+            {
+            Campo obrigatório
+            }
+            @if(assuntoForm.get('descricao')?.errors?.['maxlength'])
+            {
+            Campo deve ter no máximo 20 caracteres.
+            }
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="modalRef.dismiss()">Fechar</button>
+      <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
+  </form>

@@ -1,0 +1,34 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Autores</h2>
+
+    <button type="button" class="btn btn-primary my-2" (click)="abrirModalAutor()">
+        Adicionar
+    </button>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col" class="text-center">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(autor of listaAutores; track $index)
+                {
+                <tr>
+                    <td class="col-sm-6 col-md-9">{{autor.nome}}</td>
+                    <td class="col-sm-6 col-md-3 text-center">
+
+                        <button class="btn btn-warning btn-sm me-2 text-white"
+                            (click)="editarAutor(autor)">Editar</button>
+
+                        <button class="btn btn-danger btn-sm text-white"
+                            (click)="deletarAutor(autor.codAu)">Deletar</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Cadastro de Autor</h4>
+</div>
+<form [formGroup]="autorForm" (submit)="salvarAutor()">
+  <div class="modal-body">
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="text" id="nome" formControlName="nome" class="form-control" required>
+      
+      <div class="validation-container">
+
+        @if(autorForm.get('nome')?.invalid && (autorForm.get('nome')?.dirty || autorForm.get('nome')?.touched))
+        {
+        <div class="text-danger">
+          @if(autorForm.get('nome')?.errors?.['required'])
+          {
+          Campo obrigatório
+          }
+          @if(autorForm.get('nome')?.errors?.['maxlength'])
+          {
+          Campo deve ter no máximo 40 caracteres.
+          }
+        </div>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="modalRef.dismiss()">Fechar</button>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+  </div>
+</form>
